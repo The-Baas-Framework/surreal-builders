@@ -1,0 +1,42 @@
+{
+	"name": "authora",
+	"version": "1.0.3",
+	"description": "A simple and flexible query builder library for surreal.",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"module": "dist/index.js",
+	"type": "module",
+	"files": [
+		"/dist/",
+		"CHANGELOG.md"
+	],
+	"scripts": {
+		"build": "shx rm -rf ./dist/* && tsc",
+		"auri.build": "pnpm build",
+		"test": "jest"
+	},
+	"keywords": [
+		
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/SOG-web/surreal-builders",
+		"directory": "packages/authora"
+	},
+	"author": "SOG-web",
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/preset-env": "^7.25.7",
+		"@babel/preset-typescript": "^7.25.7",
+		"@jest/globals": "^29.7.0",
+		"@types/bun": "latest",
+		"@types/jest": "^29.5.13",
+		"@types/rethinkdb": "^2.3.21",
+		"fetch-mock": "^11.1.5",
+		"jest": "^29.7.0",
+		"ts-jest": "^29.2.5"
+	},
+	"dependencies": {
+		 "surrealdb": "^1.0.6"
+	}
+}

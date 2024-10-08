@@ -1,0 +1,36 @@
+{
+  "name": "surreal-builders",
+  "version": "1.0.0",
+  "description": "A collection of builders for surreal. Create in smaller packages for better maintainability.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish-setup": "pnpm i --no-frozen-lockfile && cd packages/surreal-query",
+    "preinstall": "npx only-allow pnpm",
+    "auri.format": "pnpm format",
+    "auri.publish_setup": "pnpm publish-setup"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SOG-web/surreal-builders"
+  },
+  "keywords": [],
+  "author": "SOG-web",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "~18.15.13",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "auri": "^0.7.4",
+    "eslint": "^8.40.0",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-astro": "^0.10.0",
+    "prettier-plugin-tailwindcss": "^0.2.8",
+    "shx": "^0.3.4",
+    "typescript": "latest"
+  },
+  "engines": {
+    "node": "20.x",
+    "pnpm": "*"
+  }
+}
