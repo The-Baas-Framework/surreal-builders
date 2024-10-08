@@ -1,6 +1,6 @@
 {
 	"name": "surreal-query",
-	"version": "0.0.2",
+	"version": "0.0.1+1",
 	"description": "A simple and flexible query builder library for surreal.",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -15,7 +15,13 @@
 		"auri.build": "pnpm build",
 		"test": "jest"
 	},
-	"keywords": [],
+	"keywords": [
+		"query",
+		"builder",
+		"surreal",
+		"database",
+		"surrealdb"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/SOG-web/surreal-builders",
