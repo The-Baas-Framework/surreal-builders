@@ -21,7 +21,7 @@ describe("SurrealTable SDK", () => {
 			.generateQuery();
 
 		expect(query).toBe(
-			"DEFINE TABLE my_namespace.my_database.users SCHEMAFULL FIELDS name: string, age: int, email: string;"
+			"DEFINE TABLE users SCHEMAFULL FIELDS name: string, age: int, email: string;"
 		);
 	});
 
@@ -47,7 +47,7 @@ describe("SurrealTable SDK", () => {
 			.generateQuery();
 
 		expect(query).toBe(
-			"DEFINE TABLE my_namespace.my_database.users SCHEMAFULL FIELDS profile: object, friends: array, company: record(companies);"
+			"DEFINE TABLE users SCHEMAFULL FIELDS profile: object, friends: array, company: record(companies);"
 		);
 	});
 });
