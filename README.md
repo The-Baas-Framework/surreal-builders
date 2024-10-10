@@ -11,11 +11,19 @@ One of the key libraries in this repo is **surreal-query**, a TypeScript API tha
 Example usage:
 
 ```typescript
-const queryBuilder = new SurrealQuery('person', queryParams, user)
-  .filter('age', 30)
-  .sort('name')
-  .limit(10);
+// Create query builder
+const queryBuilder = new SurrealQuery<any>("person")
+			.setNamespaceAndDb("test_namespace", "test_db")
+			.filter("age", 30) // Defaults to AND clause
+			.filter("name", "John", "=", "OR") // OR clause
+			.filter("status", "active");
+
+// Get the query payload
+const queryPayload = queryBuilder.getQueryPayload("SELECT");
+console.log("Query payload:", queryPayload);
 ```
+to produce
+`"SELECT * FROM person WHERE age = '30' AND name = 'John' OR status = 'active'"`
 
 This simple example demonstrates how to build queries in a flexible, composable manner for SurrealDB.
 
