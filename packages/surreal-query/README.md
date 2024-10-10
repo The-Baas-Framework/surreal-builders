@@ -14,26 +14,29 @@ yarn add surreal-query
 
 ### Currently supported features
 
-* Filter (with `AND` and `OR` where clause)
-* Sort
-* Limit
+-   Filter (with `AND` and `OR` where clause)
+-   Sort
+-   Limit
+-   Table Creation Query
 
 ### Usage
 
 Below is an example of how to use the `SurrealQuery` class.
 
+`note docs for SurrealTable is coming soon`
+
 ```ts
-import { SurrealQuery } from "surreal-query";
+import { SurrealQuery, SurrealTable } from "surreal-query";
 
 // Define parameters
 const queryParams = { namespace: "test", db_name: "test_db" };
 
 // Create query builder
 const queryBuilder = new SurrealQuery<any>("person")
-			.setNamespaceAndDb("test_namespace", "test_db")
-			.filter("age", 30) // Defaults to AND clause
-			.filter("name", "John", "=", "OR") // OR clause
-			.filter("status", "active");
+	.setNamespaceAndDb("test_namespace", "test_db")
+	.filter("age", 30) // Defaults to AND clause
+	.filter("name", "John", "=", "OR") // OR clause
+	.filter("status", "active");
 
 // Get the query payload
 const queryPayload = queryBuilder.getQueryPayload("SELECT");

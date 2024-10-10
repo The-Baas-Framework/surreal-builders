@@ -1,7 +1,11 @@
 import { sendQueryToServer, SurrealQuery } from "./surrealQuery.js";
+import SurrealTable from "./surrealTables.js";
 
-export default SurrealQuery
+export { sendQueryToServer, SurrealQuery, SurrealTable };
 
-export {sendQueryToServer}
-
-export type {QueryPayload, QueryParams, FilterOperator, FilterCondition} from "./types/index.ts"
+export type {
+	QueryPayload,
+	QueryParams,
+	FilterOperator,
+	FilterCondition,
+} from "./types/index.ts";
