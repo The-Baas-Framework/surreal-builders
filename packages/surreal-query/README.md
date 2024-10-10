@@ -29,14 +29,16 @@ import { SurrealQuery } from "surreal-query";
 const queryParams = { namespace: "test", db_name: "test_db" };
 
 // Create query builder
-const queryBuilder = new SurrealQuery("person", queryParams, user)
-	.filter("age", 30)
-	.sort("name")
-	.limit(10);
+const queryBuilder = new SurrealQuery<any>("person")
+			.setNamespaceAndDb("test_namespace", "test_db")
+			.filter("age", 30) // Defaults to AND clause
+			.filter("name", "John", "=", "OR") // OR clause
+			.filter("status", "active");
 
 // Get the query payload
 const queryPayload = queryBuilder.getQueryPayload("SELECT");
 console.log("Query payload:", queryPayload);
+// "SELECT * FROM person WHERE age = '30' AND name = 'John' OR status = 'active'"
 
 // You can now send `queryPayload` to your backend server via HTTP
 await sendQueryToServer(queryPayload);
