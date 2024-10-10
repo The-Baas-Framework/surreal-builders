@@ -12,6 +12,12 @@ npm install surreal-query
 yarn add surreal-query
 ```
 
+### Currently supported features
+
+* Filter (with `AND` and `OR` where clause)
+* Sort
+* Limit
+
 ### Usage
 
 Below is an example of how to use the `SurrealQuery` class.
