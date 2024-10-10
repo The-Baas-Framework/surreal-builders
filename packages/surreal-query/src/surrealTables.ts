@@ -135,7 +135,7 @@ export class TableQuery {
 	 */
 	generateQuery() {
 		const schema = this.schemaFields.join(", ");
-		return `DEFINE TABLE ${this.namespace}.${this.database}.${this.tableName} SCHEMAFULL FIELDS ${schema};`;
+		return `DEFINE TABLE ${this.tableName} SCHEMAFULL FIELDS ${schema};`;
 	}
 }
 
