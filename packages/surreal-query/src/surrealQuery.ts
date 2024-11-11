@@ -1,5 +1,7 @@
 import { QueryParams, FilterOperator, QueryPayload } from "./types/index.js";
 
+// https://chatgpt.com/share/670e48b8-3b80-8005-967f-b44ffa673a3c
+
 /**
  * Example usage of SurrealQuery class.
  *
@@ -51,6 +53,9 @@ export class SurrealQuery<T> {
 	private namespace?: string;
 	private db_name?: string;
 	private data?: Partial<T>;
+	private queryList: string[] = []; // For multi-query transactions
+	private transactionMode: boolean = false;
+
 	/**
 	 * Creates a new instance of SurrealQuery.
 	 *
@@ -164,6 +169,87 @@ export class SurrealQuery<T> {
 	 */
 	setData(data: Partial<T>): this {
 		this.data = data;
+		return this;
+	}
+
+	/**
+	 * Start a transaction mode. All subsequent queries will be batched into a transaction.
+	 */
+	startTransaction(): this {
+		this.transactionMode = true;
+		this.queryList = []; // Reset any previous queries
+		return this;
+	}
+
+	/**
+	 * Commit the transaction and return the combined query.
+	 * @returns {string} The combined SurrealQL queries in a transaction.
+	 */
+	commitTransaction(): string {
+		this.transactionMode = false;
+		const combinedQueries = this.queryList.join("; ");
+		this.queryList = []; // Clear transaction queries after committing
+		return `BEGIN TRANSACTION; ${combinedQueries}; COMMIT TRANSACTION;`;
+	}
+
+	/**
+	 * Rollback the transaction.
+	 */
+	rollbackTransaction(): this {
+		this.transactionMode = false;
+		this.queryList = [];
+		return this;
+	}
+
+	/**
+	 * Add a count query for counting rows.
+	 * @returns {SurrealQuery} The current instance for chaining.
+	 */
+	count(): this {
+		const query = `SELECT count() FROM ${this.table}`;
+		if (this.transactionMode) {
+			this.queryList.push(query);
+		} else {
+			this.queryList = [query];
+		}
+		return this;
+	}
+
+	/**
+	 * Add a query for creating an index.
+	 * @param {string} indexName - The name of the index.
+	 * @param {string[]} fields - The fields to create the index on.
+	 * @returns {SurrealQuery} The current instance for chaining.
+	 */
+	createIndex(indexName: string, fields: (keyof T)[]): this {
+		const query = `DEFINE INDEX ${indexName} ON TABLE ${
+			this.table
+		} FIELDS ${fields.join(", ")}`;
+		if (this.transactionMode) {
+			this.queryList.push(query);
+		} else {
+			this.queryList = [query];
+		}
+		return this;
+	}
+
+	/**
+	 * Add a relationship query for linking records.
+	 * @param {string} from - The starting table or record.
+	 * @param {string} to - The target table or record.
+	 * @param {Partial<T>} [relationData] - Optional relation data.
+	 * @returns {SurrealQuery} The current instance for chaining.
+	 */
+	relate(from: string, to: string, relationData?: Partial<T>): this {
+		let query = `RELATE ${from} -> ${to}`;
+		if (relationData) {
+			query += ` CONTENT ${JSON.stringify(relationData)}`;
+		}
+		if (this.transactionMode) {
+			this.queryList.push(query);
+		} else {
+			this.queryList = [query];
+		}
 		return this;
 	}
 
